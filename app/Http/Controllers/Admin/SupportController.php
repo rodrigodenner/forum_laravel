@@ -12,65 +12,80 @@ use Illuminate\Http\Request;
 
 class SupportController extends Controller
 {
-  public function __construct(protected SupportService $service){}
-  
-  // Página inicial que lista todos os registros de suporte.
-  public function index(Request $request)
-  {
-    $supports = $this->service->getAll($request->filter);
+    //Injetando o service no controller
+    public function __construct(protected SupportService $service) {}
 
-    return view('admin.supports.index', compact('supports'));
-  }
+    // Chama o metodo paginate() no service , resposavel por listar todos os supoertes paginados , tranzendo tudo do banco .
+    public function index(Request $request)
+    { 
+      //Retorna todos os dados vindo pela requisição do banco ou os dados do filtro se ouver com as informações passadas por parametro criada da PaginateInterface
+      $supports = $this->service->paginate(
+        page: $request->get('page',1),//A pagina , se não existir parra 1 como padrão
+        totalItemPage:$request->get('item_page',15),//Total de itens por pagina
+        filter:$request->filter//se tem filtro
+      );
 
-  // Página para criar um novo registro de suporte.
-  public function create()
-  {
-    return view('admin.supports.create');
-  }
-
-  // Armazena um novo registro de suporte com base nos dados do formulário.
-  public function store(StoreUpdateSupport $request, Support $support)
-  {
-    $this->service->new(CreateSupportDTO::makeFromRequest($request));
-
-    return redirect()->route('supports.index');
-  }
-  
-  // Exibe os detalhes de um registro de suporte.
-  public function show(string $id)
-  {
-    if (!$support = $this->service->findOne($id)) {
-      return back();
+      return view('admin.supports.index', compact('supports'));//Suporte está retornando um array para view
     }
 
-    return view('admin.supports.show', compact('support'));
-  }
-
-  // Página de edição de um registro de suporte.
-  public function edit(string $id)
-  {
-    if (!$support = $this->service->findOne($id)) {
-      return back();
+    // Recebe a requisição de criação e encaminha para a view de criação.
+    public function create()
+    {
+        return view('admin.supports.create');
     }
 
-    return view('admin.supports.edit', compact('support'));
-  }
+    //  Importa a responsabilidade de criar um novo suporte do CreateSupportDTO
+    //  Passando por parametro em store (as regras e validações da criação)
+    //  e Passando por parametro em new(o metodo DTO responsavel por cria com a validação)
+    public function store(StoreUpdateSupport $request, Support $support)
+    {
+        $this->service->new(CreateSupportDTO::makeFromRequest($request));
 
-  // Atualiza um registro de suporte com base nos dados do formulário.
-  public function update(StoreUpdateSupport $request, string | int $id, Support $support)
-  {
-    $support = $this->service->update(UpdateSupportDTO::makeFromRequest($request));
-    
-    if (!$support) return back();
+        return redirect()->route('supports.index');
+    }
 
-    return redirect()->route('supports.index');
-  }
+    // Chama o metodo findOne no service , resposavel por encontrar um item pelo ID.
+    public function show(string $id)
+    { 
+      //verifica se existe o suporte pelo id, se não existir retorna null
+        if (!$support = $this->service->findOne($id)) {
+            return back();
+        }
 
-  // Exclui um registro de suporte pelo ID.
-  public function destroy(string $id)
-  {
-    $this->service->delete($id);
-    
-    return redirect()->route('supports.index');
-  }
+        return view('admin.supports.show', compact('support'));//Suporte está retornando um array para view
+    }
+
+    // // Chama o metodo findOne no service , resposavel por encontrar um item pelo ID.
+    // Se encontrar manda esses dados para a view responsavel para fazer a edição
+    public function edit(string $id)
+    {
+      //verifica se existe o suporte pelo id, se não existir retorna null
+        if (!$support = $this->service->findOne($id)) {
+            return back();
+        }
+
+        return view('admin.supports.edit', compact('support'));//Suporte está retornando um array para view
+    }
+
+    // Chama o metodo update no service , resposavel por atualizar o item.
+    //se encontrar passa por parametro os Itens de request criados no UPdateDTO
+    public function update(StoreUpdateSupport $request, string | int $id, Support $support)
+    {
+      //Faz a atualização dos dados informados, armazenados no DTo
+        $support = $this->service->update(UpdateSupportDTO::makeFromRequest($request));
+
+        if (!$support) {
+            return back();
+        }
+
+        return redirect()->route('supports.index');
+    }
+
+    // Chama o metodo Delete no service , resposavel por remover.
+    public function destroy(string $id)
+    {
+        $this->service->delete($id);
+
+        return redirect()->route('supports.index');
+    }
 }

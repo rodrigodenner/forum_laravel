@@ -33,7 +33,7 @@ class StoreUpdateSupport extends FormRequest
           ],
           'body' => [
               'required',            // O campo 'body' é obrigatório.
-              'min:15',             // O campo 'body' deve ter pelo menos 15 caracteres.
+              'min: 5',             // O campo 'body' deve ter pelo menos 15 caracteres.
               'max:1000',           // O campo 'body' deve ter no máximo 1000 caracteres.
           ],
       ];
