@@ -21,11 +21,13 @@ class SupportController extends Controller
       //Retorna todos os dados vindo pela requisição do banco ou os dados do filtro se ouver com as informações passadas por parametro criada da PaginateInterface
       $supports = $this->service->paginate(
         page: $request->get('page',1),//A pagina , se não existir parra 1 como padrão
-        totalItemPage:$request->get('item_page',15),//Total de itens por pagina
+        totalItemPage:$request->get('item_page',5),//Total de itens por pagina
         filter:$request->filter//se tem filtro
       );
-
-      return view('admin.supports.index', compact('supports'));//Suporte está retornando um array para view
+      //passando o filtro para a view independente da pagina
+      $filters = ['filter'=>$request->get('filter','')];
+      
+      return view('admin.supports.index', compact('supports','filters'));//Suporte está retornando um array para view
     }
 
     // Recebe a requisição de criação e encaminha para a view de criação.

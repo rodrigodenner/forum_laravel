@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\CreateSupportDTO;
 use App\DTO\UpdateSupportDTO;
+use App\Repositories\PaginationInterface;
 use App\Repositories\SupportRepositoryInterface;
 use stdClass;
 
@@ -13,7 +14,7 @@ class SupportService
     public function __construct(protected SupportRepositoryInterface $repository) {}
 
     //Responsavel por trazer todos os itens do banco de dados Paginados, com todos os parametro estipulados pela a interface PaginationInterface
-    public function paginate(int $page =1,int $totalItemPage = 15,string $filter = null)
+    public function paginate(int $page =1,int $totalItemPage = 15,string $filter = null):PaginationInterface//retorna a interface de paginação
     {
       //retorna do repositorio(banco) qual a pagina/total de itens por pagina/ se tem filtro
       return $this->repository->paginate(page:$page,totalItemPage:$totalItemPage,filter:$filter);

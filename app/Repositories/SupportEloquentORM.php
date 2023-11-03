@@ -27,7 +27,8 @@ class SupportEloquentORM implements SupportRepositoryInterface
         $query->orWhere( 'body', 'like', "%{$filter}%"); 
       }
     })->paginate($totalItemPage,['*'],'page',$page); 
-    dd($result->toArray());
+    //Retornando a formatação da paginação criada em PaginationPresenter
+    return new PaginationPresenter($result);
   }
   
   // Metodo responsavel por filtra todos os dados do banco e retornar ele lá dentro do suporte.
