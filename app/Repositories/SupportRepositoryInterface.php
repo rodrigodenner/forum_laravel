@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use stdClass;
-use App\DTO\CreateSupportDTO;
-use App\DTO\UpdateSupportDTO;
+use App\DTO\Supports\CreateSupportDTO;
+use App\DTO\Supports\UpdateSupportDTO;
 
 // Interface para ditar as regras de como o Service e a logica 
 //  com o banco de dados deve se comportar
@@ -18,7 +18,7 @@ use App\DTO\UpdateSupportDTO;
 interface SupportRepositoryInterface
 {
   //Metodo que retorna a paginação,sendo a sua logica salva dentro de outra interface 
-  //Passando por parametro, qual pagina que esta mostrando o resultado/Total itens por pagina/ se tiver filtro/ que retorna uma outra interface que fala tudo que precisa para paginar
+  //Passando por parametro, qual a pagina que se encontra/ total de itens por pagina/ filtro
   public function paginate(int $page =1,int $totalItemPage = 15,string $filter = null): PaginationInterface;
 
   // Obtém todos os registros de suporte com a opção de filtrar por assunto, do banco de dados

@@ -4,9 +4,11 @@ namespace App\Repositories;
 
 use stdClass;
 use App\Models\Support;
-use App\DTO\CreateSupportDTO;
-use App\DTO\UpdateSupportDTO;
+
+use App\DTO\Supports\CreateSupportDTO;
+use App\DTO\Supports\UpdateSupportDTO;
 use App\Repositories\PaginationInterface;
+
 
 // Implementando as regras de comportamento da Interface  com o banco de dados
 // O retorno de cada logica sera importado para o COntroller 
@@ -16,36 +18,56 @@ class SupportEloquentORM implements SupportRepositoryInterface
   // Injetando o banc de dados que irá trabalhar
   public function __construct(protected Support $model){}
 
-  //Metodo resposavel por criar a logica de paginação
-  public function paginate(int $page =1,int $totalItemPage = 15,string $filter = null): PaginationInterface{
-    
-     $result = $this->model->where(function($query) use ($filter){
-
-      if($filter){
-        $query->where( 'subject', $filter);
-        
-        $query->orWhere( 'body', 'like', "%{$filter}%"); 
-      }
-    })->paginate($totalItemPage,['*'],'page',$page); 
-    //Retornando a formatação da paginação criada em PaginationPresenter
-    return new PaginationPresenter($result);
-  }
   
-  // Metodo responsavel por filtra todos os dados do banco e retornar ele lá dentro do suporte.
-  public function getAll(string $filter = null): array
-  {
-      // Cria a consulta ao banco de dados, e verifica se algum filtro foi passado
-      return $this->model->where(function($query) use ($filter){
-          // Verifica se um filtro foi especificado.
-          if($filter){
-            // Se o filtro está presente na consulta , aplica condições à consulta.
-            $query->where( 'subject', $filter); // Filtra pelo campo 'subject' igual ao filtro e retorna o dado para o controller mostrar na view.
-            
-            $query->orWhere( 'body', 'like', "%{$filter}%"); // Se for filtrado pelo body, retorna dado para o constroller,mostrar na view .
-          }
-        })->get()->toArray(); // Executa a consulta, obtém os resultados e converte em um array.
-        
-  }
+  public function paginate(int $page = 1, int $totalItemPage = 15, string $filter = null): PaginationInterface{
+    // Esta função "paginate" recebe três parâmetros: $page, $totalItemPage e $filter. 
+    // $page é o número da página atual (1 por padrão).
+    // $totalItemPage é o número máximo de itens exibidos por página (15 por padrão).
+    // $filter é um filtro de pesquisa opcional.
+
+    $result = $this->model->where(function($query) use ($filter){
+        // Aqui começamos a construir uma consulta no modelo (assumindo que $this->model seja um modelo Eloquent).
+
+        if($filter){
+            // Verificamos se o filtro não está vazio.
+
+            $query->where('subject', $filter);
+            // Se houver um filtro, adicionamos uma cláusula "WHERE" para corresponder à coluna 'subject' com o valor do filtro.
+
+            $query->orWhere('body', 'like', "%{$filter}%");
+            // Também adicionamos uma cláusula "OR" para corresponder à coluna 'body' que contém o filtro parcialmente.
+        }
+    })->paginate($totalItemPage, ['*'], 'page', $page);
+    // Em seguida, usamos o método "paginate" no modelo, que efetua a consulta e retorna uma lista paginada.
+
+    return new PaginationPresenter($result);
+    // Finalmente, envolvemos o resultado paginado em uma instância de "PaginationPresenter" e a retornamos.
+}
+
+  
+  
+public function getAll(string $filter = null): array
+{
+    // Esta função "getAll" recebe um parâmetro opcional chamado $filter, que é usado para filtrar os resultados.
+
+    return $this->model->where(function($query) use ($filter){
+        // Aqui começamos a construir uma consulta no modelo (assumindo que $this->model seja um modelo Eloquent).
+
+        if($filter){
+            // Verificamos se o filtro não está vazio.
+
+            $query->where('subject', $filter);
+            // Se houver um filtro, adicionamos uma cláusula "WHERE" para corresponder à coluna 'subject' com o valor do filtro.
+
+            $query->orWhere('body', 'like', "%{$filter}%");
+            // Também adicionamos uma cláusula "OR" para corresponder à coluna 'body' que contém o filtro parcialmente.
+        }
+    })->get()->toArray();
+    // Em seguida, usamos o método "get" no modelo para obter os resultados que correspondem ao filtro, e depois convertemos esses resultados em um array.
+
+    // O resultado final é um array que contém os registros do banco de dados após a aplicação do filtro (se especificado).
+}
+
     
   
     // Procura o dado pelo o ID, e retorna para o controlle mostrar na veiw e retorna um stdClass,
@@ -57,6 +79,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
     if(!$support){
      return null; 
     };
+    
     // Com o retorno da consulta ao banco , pega o retorno e transforma em um Array
     return (object) $support->toArray();
   }
