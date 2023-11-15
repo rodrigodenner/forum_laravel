@@ -21,6 +21,7 @@ class SupportResource extends JsonResource
            'id' => $this->id,
            'subject' => $this->subject,
            'body' => $this->body,
+           'dt_created' => Carbon::make($this->created_at)->format('Y-m-d'),
        ];
     }
 }

@@ -21,12 +21,13 @@ class SupportController extends Controller
     public function index(Request $request)
     {
       $supports = $this->service->paginate(
-        page: $request->get('page',1),
-        totalItemPage:$request->get('item_page',5),
-        filter:$request->filter
-      );
+        page: $request->get('page', 1),
+          totalItemPage: $request->get('per_page', 5),
+          filter: $request->filter,
+        );
 
-      return ApiAdapter::toJson($supports);
+        return ApiAdapter::toJson($supports);
+
     }
 
     /**
@@ -44,9 +45,9 @@ class SupportController extends Controller
      */
     public function show(string $id)
     {
-        if(!$support = $this->service->findOne($id)) {
+        if (!$support = $this->service->findOne($id)) {
             return response()->json([
-              'error' => 'Not found',
+                'error' => 'Not Found'
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -58,11 +59,11 @@ class SupportController extends Controller
      */
     public function update(StoreUpdateSupport $request, string $id)
     {
-        $support = $this->service->update(UpdateSupportDTO::makeFromRequest($request,$id));
+        $support = $this->service->update(UpdateSupportDTO::makeFromRequest($request, $id));
 
-        if(!$support) {
+        if (!$support) {
             return response()->json([
-              'error' => 'Not found',
+                'error' => 'Not Found'
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -75,9 +76,9 @@ class SupportController extends Controller
      */
     public function destroy(string $id)
     {
-        if(!$this->service->findOne($id)) {
+        if (!$this->service->findOne($id)) {
             return response()->json([
-              'error' => 'Not found',
+                'error' => 'Not Found'
             ], Response::HTTP_NOT_FOUND);
         }
 
