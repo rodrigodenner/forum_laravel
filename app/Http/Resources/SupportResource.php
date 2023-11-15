@@ -15,12 +15,12 @@ class SupportResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-      //padronizando como deve retornar a api
-        return [
-          'id'=> $this->id,
-          'subject' => $this->subject,
-          'body'=> $this->body,
-          
-        ];
+
+
+       return [
+           'id' => $this->id,
+           'subject' => $this->subject,
+           'body' => $this->body,
+       ];
     }
 }
