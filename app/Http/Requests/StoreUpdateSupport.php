@@ -25,32 +25,25 @@ class StoreUpdateSupport extends FormRequest
   {
       // Define as regras de validação para os campos 'subject' e 'body'.
       $rules = [
-          'subject' => [
-              'required',            // O campo 'subject' é obrigatório.
-              'min:3',              // O campo 'subject' deve ter pelo menos 3 caracteres.
-              'max:255',            // O campo 'subject' deve ter no máximo 255 caracteres.
-              'unique:supports'     // O valor do campo 'subject' deve ser único na tabela 'supports'.
-          ],
-          'body' => [
-              'required',            // O campo 'body' é obrigatório.
-              'min: 5',             // O campo 'body' deve ter pelo menos 15 caracteres.
-              'max:1000',           // O campo 'body' deve ter no máximo 1000 caracteres.
-          ],
-      ];
-    
+        'subject' => 'required|min:3|max:255|unique:supports',
+        'body' => [
+            'required',
+            'min:3',
+            'max:100000',
+        ],
+    ];
+
       // Se o método da solicitação for 'PUT' (atualização), atualize as regras para 'subject'.
-      if ($this->method() === 'PUT') {
-          $rules['subject'] = [
-              'required',
-              'min:3',
-              'max:255',
-              // Além das regras anteriores, o valor do campo 'subject' deve ser único,
-              // exceto para o registro atual (ignore o ID deste registro).
-              // Quando tentar editar o assunto e o assunto for o mesmo pode liberar 
-              Rule::unique('supports')->ignore($this->id),
+      if ($this->method() === 'PUT' || $this->method() === 'PATCH') {
+        $rules['subject'] = [
+            'required', // 'nullable',
+            'min:3',
+            'max:255',
+            // "unique:supports,subject,{$this->id},id",
+            Rule::unique('supports')->ignore($this->support ?? $this->id),
           ];
       }
-      
+
       // Retorna as regras de validação.
       return $rules;
   }
