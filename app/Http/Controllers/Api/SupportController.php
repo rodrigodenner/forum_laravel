@@ -20,10 +20,10 @@ class SupportController extends Controller
      */
     public function index(Request $request)
     {
-      $supports = $this->service->paginate(
-        page: $request->get('page', 1),
-          totalItemPage: $request->get('per_page', 5),
-          filter: $request->filter,
+        $supports = $this->service->paginate(
+            page: $request->get('page', 1),
+            totalItemPage: $request->get('per_page', 5),
+            filter: $request->filter,
         );
 
         return ApiAdapter::toJson($supports);

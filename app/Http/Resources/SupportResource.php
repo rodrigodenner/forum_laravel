@@ -16,12 +16,11 @@ class SupportResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-
        return [
            'id' => $this->id,
            'subject' => $this->subject,
            'body' => $this->body,
-           'dt_created' => Carbon::make($this->created_at)->format('Y-m-d'),
+           'dt_created' => Carbon::make($this->created_at)->format('Y-m-d' ),
        ];
     }
 }
