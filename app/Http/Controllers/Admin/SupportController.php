@@ -97,6 +97,6 @@ class SupportController extends Controller
     {
         $this->service->delete($id);
 
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')->with('message','Dúvida deletada com sucesso!');
     }
 }
