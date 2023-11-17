@@ -44,11 +44,12 @@ class SupportController extends Controller
     //  Importa a responsabilidade de criar um novo suporte do CreateSupportDTO
     //  Passando por parametro em store (as regras e validações da criação)
     //  e Passando por parametro em new(o metodo DTO responsavel por cria com a validação)
+    //passando with como flash message
     public function store(StoreUpdateSupport $request, Support $support)
     {
         $this->service->new(CreateSupportDTO::makeFromRequest($request));
 
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')->with('message','Dúvida cadastrada com sucesso!');
     }
 
     // Chama o metodo findOne no service , resposavel por encontrar um item pelo ID.
@@ -77,6 +78,7 @@ class SupportController extends Controller
 
     // Chama o metodo update no service , resposavel por atualizar o item.
     //se encontrar passa por parametro os Itens de request criados no UPdateDTO
+    //With como flash message
     public function update(StoreUpdateSupport $request, string | int $id, Support $support)
     {
 
@@ -87,7 +89,7 @@ class SupportController extends Controller
             return back();
         }
 
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')->with('message','Dúvida atualizada com sucesso!');
     }
 
     // Chama o metodo Delete no service , resposavel por remover.

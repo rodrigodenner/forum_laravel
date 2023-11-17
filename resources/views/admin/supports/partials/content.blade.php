@@ -37,7 +37,7 @@
                             </td>
                             <td class="px-4 py-2 text-sm whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0 bg-green-500"></div>
+                                    <div class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0 bg-blue-300"></div>
                                 </div>
                             </td>
 

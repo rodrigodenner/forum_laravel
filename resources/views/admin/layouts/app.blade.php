@@ -8,10 +8,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <section class="container px-4 mx-auto">
+    <section class="container px-4 py-4 mx-auto ">
         @yield('header')
         <div>
-            @yield('content')
+          <x-message/>
+          @yield('content')
         </div>
     </section>
 </body>
