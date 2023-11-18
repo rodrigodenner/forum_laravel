@@ -1,7 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\SupportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SupportController;
+use App\Http\Controllers\Api\Auth\AuthController;
 
-//Criando a Rota da api 
-Route::apiResource('/supports',SupportController::class);
+
+ Route::post('/login',[AuthController::class,'auth']);
+
+Route::middleware(['auth:sanctum'])->group(function(){
+  Route::apiResource('/supports',SupportController::class);
+});
