@@ -7,8 +7,8 @@
     <title>@yield('title') - {{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <section class="container px-4 py-4 mx-auto ">
+<body >
+    <section class="container dark px-4 py-4 mx-auto ">
         @yield('header')
         <div>
           <x-message/>

@@ -1,3 +1,4 @@
+// tailwind.config.js
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
@@ -17,5 +18,8 @@ export default {
         },
     },
 
+    darkMode: 'class', // Ativar modo escuro usando a estratégia de classe
+
     plugins: [forms],
 };
+
