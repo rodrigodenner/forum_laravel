@@ -13,11 +13,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('supports', function (Blueprint $table) {
-            $table->id();
+            // $table->id();   Cria um ID global usando UUID ao criar um novo modelo para trazer segurança
+            $table->uuid('id')->primary();
+            $table->uuid('user_id')->index();//criando relacionamento entre tabela user e supports
             $table->string('subject');
             $table->enum('status',array_column(SupportStatus::cases(),'name'));
             $table->text('body');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            // Estabelece uma relação: 'user_id' aqui faz referência a 'id' na tabela 'users'.
         });
     }
 
