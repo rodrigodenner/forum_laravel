@@ -3,7 +3,7 @@
 namespace App\Repositories\Contracts;
 
 //Interface criada para encapsular a lógica de formatação e exibição de dados, Ela ajudam a manter as views mais organizadas, permitindo a formatação personalizada dos dados paginados antes de serem exibidos."
-use App\Repositories\stdClass;
+
 
 interface PaginationInterface {
 
