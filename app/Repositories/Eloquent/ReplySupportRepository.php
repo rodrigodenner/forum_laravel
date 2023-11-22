@@ -13,24 +13,24 @@ class ReplySupportRepository implements ReplayRepositoryInterface
 
   public function __construct(
     protected Model $model,
-) {
-}
+  ) {
+  }
 
-    public function getAllBySupportId(string $supportId): array
-    {
-      $replies = $this->model->where('support_id',$supportId)->get();
+  public function getAllBySupportId(string $supportId): array
+  {
+    $replies = $this->model->where('support_id',$supportId)->get();
 
-      return $replies->toArray();
-    }
+    return $replies->toArray();
+  }
 
-    public function createNew(CreateReplayDTO $dto): stdClass
-    {
-      $replay = $this->model->create([
-        'content' => $dto->content,
-        'support_id' => $dto->supportId,
-        'user_id' => Auth::user()->id,
-      ]);
+  public function createNew(CreateReplayDTO $dto): stdClass
+  {
+    $replay = $this->model->create([
+      'content' => $dto->content,
+      'support_id' => $dto->supportId,
+      'user_id' => Auth::user()->id,
+    ]);
 
-      return (object) $replay;
-    }
+    return (object) $replay->toArray();
+  }
 }

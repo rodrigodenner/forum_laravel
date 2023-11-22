@@ -12,6 +12,11 @@ class ReplySupport extends Model
   use HasFactory, HasUuids;
 
   protected $table = 'replies_support';
+  protected $fillable = [
+    'user_id',
+    'support_id',
+    'content'
+  ];
 
   //criando o relacionamento entre as tabelas
   public function user():BelongsTo
