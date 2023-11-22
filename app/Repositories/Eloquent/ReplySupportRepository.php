@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Repositories\Contracts\Eloquent;
+namespace App\Repositories\Eloquent;
 
 use App\DTO\Replies\CreateReplayDTO;
-
-use App\Models\ReplySupport as Model;
+use App\Models\ReplySupport;
 use App\Repositories\Contracts\ReplayRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use stdClass;
 
 class ReplySupportRepository implements ReplayRepositoryInterface
 {
-    public function __construct(Model $model){}
+  
+    public function __construct(ReplySupport $model){}
 
     public function getAllBySupportId(string $supportId): array
     {
@@ -27,5 +27,7 @@ class ReplySupportRepository implements ReplayRepositoryInterface
         'support_id' => $dto->supportId,
         'user_id' => Auth::user()->id,
       ]);
+
+      return (object) $replay;
     }
 }

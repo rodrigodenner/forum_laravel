@@ -2,20 +2,24 @@
 
 namespace App\Services;
 
+
 use App\DTO\Replies\CreateReplayDTO;
+use App\Repositories\Contracts\ReplayRepositoryInterface;
 use stdClass;
 
 class ReplySupportService
 {
-  //Retorna todas as resposta de um suporte
-    public function getAllBySupportId(string $supportId):array
-    {
-      return [];
-    }
+  public function __construct(protected ReplayRepositoryInterface $repository) {
+  }
 
-    //cria uma nova resposta ao support com os parametros vindos do DTO
-    public function createNew(CreateReplayDTO $dto):stdClass
-    {
-      return throw new \Exception('not implement');
-    }
+  public function getAllBySupportId(string $supportId): array
+  {
+   return $this->repository->getAllBySupportId($supportId);
+  }
+
+  public function createNew(CreateReplayDTO $dto): stdClass
+  {
+    return $this->repository->createNew($dto);
+  }
+
 }
