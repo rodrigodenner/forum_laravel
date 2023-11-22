@@ -7,9 +7,7 @@ namespace App\Repositories\Contracts;
 
 interface PaginationInterface {
 
-  /**
-     * @return stdClass[]
-     */
+
   public function items():array;// Ira retornar os itens
   public function totalItems():int;//Irá retornar o total de itens na pagina
   public function isFirstPage():bool;//Ira informar se está na primeira pagina
