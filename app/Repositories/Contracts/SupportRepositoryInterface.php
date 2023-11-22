@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Contracts;
 
-use stdClass;
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
+use stdClass;
 
-// Interface para ditar as regras de como o Service e a logica 
+// Interface para ditar as regras de como o Service e a logica
 //  com o banco de dados deve se comportar
-//  Apos a criação, vá ate Providers/Appservice/ 
+//  Apos a criação, vá ate Providers/Appservice/
 //  Injete em Register ( Aonde injetar a interface, irá deppender da logica
 // criada dentro de uma classe concetra, nesse caso a classe concreta é SupportEloquente )
 
@@ -17,7 +17,7 @@ use App\DTO\Supports\UpdateSupportDTO;
 // Interface para ditar as regras de como o Service e a logica com o banco de dados deve se comportar
 interface SupportRepositoryInterface
 {
-  //Metodo que retorna a paginação,sendo a sua logica salva dentro de outra interface 
+  //Metodo que retorna a paginação,sendo a sua logica salva dentro de outra interface
   //Passando por parametro, qual a pagina que se encontra/ total de itens por pagina/ filtro
   public function paginate(int $page =1,int $totalItemPage = 15,string $filter = null): PaginationInterface;
 

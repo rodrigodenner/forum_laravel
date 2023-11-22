@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Contracts\PaginationInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use stdClass;
 
- class PaginationPresenter implements PaginationInterface
+class PaginationPresenter implements PaginationInterface
 {
   private array $items;
   /**
@@ -56,7 +57,7 @@ use stdClass;
   {
     return $this->paginator->currentPage() - 1;
   }
-  
+
   //Convertando todos os dados de items em stdClass
   private function resolveItems(array $items):array //retornar um array de stdClass
   {
