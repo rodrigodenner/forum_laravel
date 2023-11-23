@@ -7,7 +7,8 @@ class CreateReplayDTO
   public function __construct(
     public string $supportId,
     public string $content,
-  ){}
+  ) {
+  }
 
   public static function makeFromRequest(object $request): self
   {

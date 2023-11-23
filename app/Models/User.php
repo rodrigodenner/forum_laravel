@@ -47,8 +47,8 @@ class User extends Authenticatable
     ];
 
     //criando o relacionamento entre as tabelas
-    public function supports():HasMany
-    {
-      return $this->hasMany(Support::class);
-    }
+  public function supports(): HasMany
+  {
+    return $this->hasMany(Support::class);
+  }
 }

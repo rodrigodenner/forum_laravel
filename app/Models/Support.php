@@ -29,13 +29,13 @@ class Support extends Model
   }
 
   //criando o relacionamento entre as tabelas
-  public function replies():HasMany
-  {
-    return $this->hasMany(ReplySupport::class);
-  }
-
-  public function user():BelongsTo
+  public function user(): BelongsTo
   {
     return $this->belongsTo(User::class);
+  }
+
+  public function replies(): HasMany
+  {
+    return $this->hasMany(ReplySupport::class);
   }
 }

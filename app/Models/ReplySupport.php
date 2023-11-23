@@ -12,19 +12,21 @@ class ReplySupport extends Model
   use HasFactory, HasUuids;
 
   protected $table = 'replies_support';
+
   protected $fillable = [
     'user_id',
     'support_id',
-    'content'
+    'content',
   ];
 
+
   //criando o relacionamento entre as tabelas
-  public function user():BelongsTo
+  public function user(): BelongsTo
   {
     return $this->belongsTo(User::class);
   }
 
-  public function supports():BelongsTo
+  public function support(): BelongsTo
   {
     return $this->belongsTo(Support::class);
   }
