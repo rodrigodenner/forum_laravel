@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DTO\Replies\CreateReplayDTO;
+use App\Http\Requests\StoreReplySupportRequest;
 use App\Services\ReplySupportService;
 use Illuminate\Http\Request;
 use App\Services\SupportService;
@@ -28,7 +29,7 @@ class ReplySupportController extends Controller
   }
 
   //cadastro de duvida
-  public function store(Request $request)
+  public function store(StoreReplySupportRequest $request)
   {
     $this->replyService->createNew(CreateReplayDTO::makeFromRequest($request));
 
