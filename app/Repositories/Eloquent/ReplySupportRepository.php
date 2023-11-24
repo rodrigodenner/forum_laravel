@@ -35,4 +35,12 @@ class ReplySupportRepository implements ReplayRepositoryInterface
 
     return (object) $replay->toArray();
   }
+
+  public function delete(string $id): bool
+  {
+    if(!$reply = $this->model->find($id)){
+      return false;
+    }
+    return (bool) $reply->delete();
+  }
 }

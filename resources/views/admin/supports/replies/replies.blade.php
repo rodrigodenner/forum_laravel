@@ -32,7 +32,7 @@
           <!-- Profile and Rating -->
           <div class="flex justify-between justify">
             <div class="flex gap-2">
-              <div class="text-center bg-red-500 rounded-full w-7 h-7">CF</div>
+              <div class="text-center bg-red-500 rounded-full w-7 h-7">RD</div>
                <span>{{ $reply['user']['name'] }}</span>
             </div>
           </div>
@@ -44,14 +44,14 @@
           <div class="flex justify-between">
              <span>{{ $reply['created_at'] }}</span>
               {{--@can('owner', $reply['user']['id']) --}}
-            {{-- <form action="{{ route('replies.destroy', [$support->id, $reply['id']]) }}" method="post"> --}}
+             <form action="{{ route('replies.destroy', [$support->id, $reply['id']]) }}" method="post">
             @csrf()
             @method('DELETE')
             <button type="submit" class="px-4 py-1 text-white bg-red-500 border-b-4 border-red-700 rounded
             hover:bg-red-400 hover:border-red-500">Deletar</button>
             </form>
             {{-- @else --}}
-            --
+
             {{-- @endcan --}}
           </div>
         </div>

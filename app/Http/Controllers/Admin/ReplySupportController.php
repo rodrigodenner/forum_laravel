@@ -35,5 +35,14 @@ class ReplySupportController extends Controller
     return redirect()->route('replies.index', $request->support_id)->with('message','Cadastrada com sucesso!');
 
   }
+  //deletar resposta
+  public function destroy(string $supportId, string $id)
+  {
+   $this->replyService->delete($id);
+
+    return redirect()
+      ->route('replies.index', $supportId)
+      ->with('message', 'Deletado com sucesso!');
+  }
 
 }
