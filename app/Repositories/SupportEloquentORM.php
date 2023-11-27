@@ -51,7 +51,7 @@ public function getAll(string $filter = null): array
 {
     // Esta função "getAll" recebe um parâmetro opcional chamado $filter, que é usado para filtrar os resultados.
 
-    return $this->model->where(function($query) use ($filter){
+    return $this->model->with('user')->where(function($query) use ($filter){
         // Aqui começamos a construir uma consulta no modelo (assumindo que $this->model seja um modelo Eloquent).
 
         if($filter){
