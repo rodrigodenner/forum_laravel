@@ -3,9 +3,10 @@
 namespace App\Services;
 
 
-use App\DTO\Replies\CreateReplayDTO;
-use App\Repositories\Contracts\ReplayRepositoryInterface;
 use stdClass;
+use App\DTO\Replies\CreateReplayDTO;
+use Illuminate\Support\Facades\Gate;
+use App\Repositories\Contracts\ReplayRepositoryInterface;
 
 class ReplySupportService
 {

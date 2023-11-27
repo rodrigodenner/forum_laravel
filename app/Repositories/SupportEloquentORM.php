@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
+use stdClass;
+use App\Models\Support;
+use Illuminate\Support\Facades\Gate;
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
-use App\Models\Support;
 use App\Repositories\Contracts\PaginationInterface;
 use App\Repositories\Contracts\SupportRepositoryInterface;
-use stdClass;
 
 
 // Implementando as regras de comportamento da Interface  com o banco de dados
@@ -74,7 +75,7 @@ public function getAll(string $filter = null): array
     //  caso não ache nada, retorne um NUll.
   public function findOne(string $id): stdClass | null
   {
-    $support = $this->model->find($id);
+    $support = $this->model->with('user')->find($id);
 
     if(!$support){
      return null;
@@ -101,6 +102,12 @@ public function getAll(string $filter = null): array
     if(!$support = $this->model->find($dto->id)){
       return null;
     }
+
+    //verificando se o usuario tem a permissao
+    if(Gate::denies('owner',$support->user->id)){
+      abort(403,'Not Authorized');
+    }
+
     //PEga os dados para fazer a atualização no banco vindos do UpdateDTO, atualiza convertendo para array
     $support->update((array)$dto);
 
@@ -110,7 +117,14 @@ public function getAll(string $filter = null): array
     // Exclui um registro de suporte pelo ID e não retorne nada.
   public function delete(string $id): void
   {
-    $this->model->findOrFail($id)->delete();
+    $support =  $this->model->findOrFail($id);
+
+    //verificando se o usuario tem a permissao
+    if(Gate::denies('owner',$support->user->id)){
+      abort(403,'Not Authorized');
+    }
+
+    $support->delete();
   }
 
 }

@@ -2,11 +2,12 @@
 
 namespace App\Repositories\Eloquent;
 
+use stdClass;
 use App\DTO\Replies\CreateReplayDTO;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Models\ReplySupport as Model;
 use App\Repositories\Contracts\ReplayRepositoryInterface;
-use Illuminate\Support\Facades\Auth;
-use stdClass;
 
 class ReplySupportRepository implements ReplayRepositoryInterface
 {
@@ -41,6 +42,12 @@ class ReplySupportRepository implements ReplayRepositoryInterface
     if(!$reply = $this->model->find($id)){
       return false;
     }
+
+    //verificando se o usuario tem a permissao
+    if(Gate::denies('owner', $reply->user->id)){
+      abort(403,'Not Authorized');
+    }
+
     return (bool) $reply->delete();
   }
 }

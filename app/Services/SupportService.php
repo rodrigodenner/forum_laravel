@@ -6,6 +6,7 @@ use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
 use App\Repositories\Contracts\PaginationInterface;
 use App\Repositories\Contracts\SupportRepositoryInterface;
+use Illuminate\Support\Facades\Gate;
 use stdClass;
 
 class SupportService
@@ -47,6 +48,6 @@ class SupportService
     // Responsavel por Exclui um registro de suporte no repositorio pelo ID / retorna nada
     public function delete(string $id): void
     {
-        $this->repository->delete($id);
+      $this->repository->delete($id);
     }
 }
