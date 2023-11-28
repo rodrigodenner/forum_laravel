@@ -27,7 +27,7 @@ class SupportRepliedMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Comentaram na sua dúvida. Venha vê!',
+          subject: 'Support Replied',
         );
     }
 

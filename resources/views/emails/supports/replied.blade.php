@@ -1,14 +1,12 @@
 <x-mail::message>
-# Dúvida Respondida
+  # Dúvida Respondida
 
-Assunto da dúvida: <strong><u>{{ $reply->support_id }}</u></strong> <br>
-<hr>
-{{ $reply->content }}
+  Assunto da dúvida {{ $reply->support_id }} foi respondi com <b>{{ $reply->content }}</b>.
 
-<x-mail::button :url="route('replies.index', $reply->support_id)">
-Ver
-</x-mail::button>
+  <x-mail::button :url="route('replies.index', $reply->support_id)">
+    Ver
+  </x-mail::button>
 
-Obrigado,<br>
-{{ config('app.name') }}
+  Obrigado,<br>
+  {{ config('app.name') }}
 </x-mail::message>

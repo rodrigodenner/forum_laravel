@@ -35,10 +35,12 @@
                             </td>
                             <td class="px-4 py-2 text-sm whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="object-cover w-6 h-6 -mx-1 bg-blue-300 border-2 border-white rounded-full dark:border-gray-700 shrink-0"></div>
+                                    @foreach ($support->replies as $reply)
+                                    <div class="object-cover w-6 h-6 -mx-1 bg-blue-300 border-2 border-white
+                                    rounded-full dark:border-gray-700 shrink-0">{{ getInitials($reply['user']['name']) }}</div>
+                                    @endforeach
                                 </div>
                             </td>
-
                             <td class="flex px-4 py-2 text-sm whitespace-nowrap">
                               @can('owner', $support->user_id)
                                 <a href="{{ route('supports.edit', $support->id) }}" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg">
