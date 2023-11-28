@@ -5,6 +5,7 @@ namespace App\Services;
 
 use stdClass;
 use App\DTO\Replies\CreateReplayDTO;
+use App\Events\SupportReplied;
 use Illuminate\Support\Facades\Gate;
 use App\Repositories\Contracts\ReplayRepositoryInterface;
 
@@ -20,7 +21,12 @@ class ReplySupportService
 
   public function createNew(CreateReplayDTO $dto): stdClass
   {
-    return $this->repository->createNew($dto);
+
+    $reply = $this->repository->createNew($dto);
+
+    SupportReplied::dispatch($reply);
+
+    return $reply;
   }
 
   public function delete(string $id): bool

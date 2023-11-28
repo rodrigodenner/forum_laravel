@@ -28,11 +28,13 @@ class ReplySupportRepository implements ReplayRepositoryInterface
 
   public function createNew(CreateReplayDTO $dto): stdClass
   {
-    $replay = $this->model->create([
+    $replay = $this->model->with('user')->create([
       'content' => $dto->content,
       'support_id' => $dto->supportId,
       'user_id' => Auth::user()->id,
     ]);
+    $replay = $replay->with('user')->first();
+    
 
     return (object) $replay->toArray();
   }
