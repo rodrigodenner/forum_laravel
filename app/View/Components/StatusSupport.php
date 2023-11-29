@@ -19,13 +19,11 @@ class StatusSupport extends Component
      */
     public function render(): View|Closure|string
     {
-      $this->status= "A";
-      $color = "green";
-      $color = $this->status === "P" ? "blue": $color;
-      $color = $this->status === "C" ? "red": $color;
-
+      $color = 'green';
+      $color = $this->status === 'C' ? 'red' : $color;
+      $color = $this->status === 'P' ? 'blue' : $color;
       $textStatus = getStatusSupport($this->status);
 
-      return view('components.status-support',compact("textStatus","color"));
+      return view('components.status-support', compact('textStatus', 'color'));
     }
 }

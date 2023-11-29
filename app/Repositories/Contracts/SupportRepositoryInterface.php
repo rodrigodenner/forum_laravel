@@ -4,6 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
+use App\Enums\SupportStatus;
 use stdClass;
 
 // Interface para ditar as regras de como o Service e a logica
@@ -35,4 +36,7 @@ interface SupportRepositoryInterface
 
   // Exclui um registro de suporte pelo ID no banco de dados
   public function delete(string $id): void;
+
+  //atualizar status, recebendo o id do support e o status
+  public function updateStatus(string $id, SupportStatus $status):void;
 }

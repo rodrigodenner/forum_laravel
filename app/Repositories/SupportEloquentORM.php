@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\SupportStatus;
 use stdClass;
 use App\Models\Support;
 use Illuminate\Support\Facades\Gate;
@@ -43,7 +44,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
         }
     })->paginate($totalItemPage, ['*'], 'page', $page);
     // Em seguida, usamos o método "paginate" no modelo, que efetua a consulta e retorna uma lista paginada.
-
+    
     return new PaginationPresenter($result);
     // Finalmente, envolvemos o resultado paginado em uma instância de "PaginationPresenter" e a retornamos.
 }
@@ -130,4 +131,10 @@ public function getAll(string $filter = null): array
     $support->delete();
   }
 
+  public function updateStatus(string $id, SupportStatus $status): void
+  {
+    $this->model->where('id',$id)->update([
+      'status' => $status->name
+    ]);
+  }
 }
