@@ -27,10 +27,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
     // $totalItemPage é o número máximo de itens exibidos por página (15 por padrão).
     // $filter é um filtro de pesquisa opcional.
 
-    $result = $this->model->with(['replies'=>function($query){
-      $query->limit(4); //trazendo 4 interações
-      $query->latest();
-    }])->where(function($query) use ($filter){
+    $result = $this->model->with('replies.user')->where(function($query) use ($filter){
         // Aqui começamos a construir uma consulta no modelo (assumindo que $this->model seja um modelo Eloquent).
 
         if($filter){
